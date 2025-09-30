@@ -68,7 +68,7 @@ class CLASS:
 
         self.SG_throttling = PacketThrottler.CLASS()
 
-        packet_filter = "inbound and ip and udp.DstPort == 6672 and udp.PayloadLength > 0"
+        packet_filter = "udp.PayloadLength >= 0 and ip and (inbound and udp.DstPort == 6672 or outbound and udp.SrcPort == 6672)"
 
         with pydivert.WinDivert(packet_filter) as win_divert:
             for packet in win_divert:
